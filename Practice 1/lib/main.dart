@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'counter_bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -15,21 +14,29 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final CounterBloc _counterBloc = CounterBloc();
+
+  @override
+  void dispose() {
+    _counterBloc.dispose();
+    super.dispose();
+  }
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -46,23 +53,33 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
+          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
+            Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            StreamBuilder<int>(
+              stream: _counterBloc.counterStream,
+              initialData: 0,
+              builder: (context, snapshot) {
+                return Text(
+                  '$_counter',
+                  style: Theme.of(context).textTheme.headline4,
+                );
+              },
+            )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+  // void _incrementCounter() {
+  //   _counterBloc.eventSink.add(CounterEvent.Increment);
+  // }
 }
