@@ -1,0 +1,4 @@
+#Tue Nov 02 09:16:57 SGT 2021
+base.0=/home/amirul/Documents/BeSquare/4_251021MobileDevelopment/md_besquare_day6/amirul-hazwan-practice-6/Practice 2/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
