@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TextCubit extends Cubit<String> {
-  TextCubit() : super('');
+class InputCubit extends Cubit<String> {
+  InputCubit() : super('');
 
   void capatalise(word) {
     emit(word.toUpperCase());
